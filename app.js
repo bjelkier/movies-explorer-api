@@ -8,7 +8,7 @@ const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const INTERNAL_SERVER_ERROR = 500;
-const { PORT = 3100, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 mongoose.connect(DATABASE, {
   useNewUrlParser: true,
@@ -16,10 +16,10 @@ mongoose.connect(DATABASE, {
 
 const corsOptions = {
   origin: ['http://localhost:3000',
-    'https://bjelkier.nomoredomainsicu.ru',
-    'https://api.bjelkier.nomoredomainsicu.ru',
-    'http://bjelkier.nomoredomainsicu.ru',
-    'http://api.bjelkier.nomoredomainsicu.ru'],
+    'https://albinamakarova.nomoredomainsrocks.ru',
+    'https://api.albinamakarova.nomoredomainsrocks.ru',
+    'http://albinamakarova.nomoredomainsrocks.ru',
+    'http://api.albinamakarova.nomoredomainsrocks.ru'],
   credentials: true,
 };
 
