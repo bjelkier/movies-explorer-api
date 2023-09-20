@@ -4,13 +4,15 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+require('dotenv').config();
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
 
 const INTERNAL_SERVER_ERROR = 500;
-const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const { PORT = 3000, NODE_ENV, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
-mongoose.connect(DATABASE, {
+mongoose.connect(NODE_ENV === 'production' ? DATABASE : 'mongodb://127.0.0.1:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 
@@ -30,6 +32,7 @@ app.use(helmet());
 
 app.use(cors(corsOptions));
 app.use(requestLogger);
+app.use('/', limiter);
 app.use('/', router);
 
 app.use(errorLogger);
